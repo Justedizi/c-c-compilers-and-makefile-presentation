@@ -1,30 +1,37 @@
-kompilatory i makefile w c/c++
-kompilatory
-Co to jest kompilator?
+# kompilatory i makefile w c/c++
 
-Kompilator to program komputerowy, który automatycznie tłumaczy kod źródłowy napisany w języku wysokiego poziomu (np. C++) na kod wynikowy, najczęściej język maszynowy zrozumiały dla procesora
 
-Najpopularniejsze kompilatory
+### kompilatory 
+**Co to jest kompilator?**
 
-C/C++
-GNU ( makro : g++, gcc)
-CLANG
-etc
-Dla innych jezykow np Rust: rustc, Java: javac etc
-Proces kompilacji
+*Kompilator to program komputerowy, który automatycznie tłumaczy kod źródłowy napisany w języku wysokiego poziomu (np. C++) na kod wynikowy, najczęściej język maszynowy zrozumiały dla procesora*
 
-Pereprocesor
-...
+**Najpopularniejsze kompilatory**
+* C/C++
+    *  [GNU ( makro : g++, gcc)](https://gcc.gnu.org/onlinedocs/gcc.pdf)
+    * CLANG
+    * etc
+* Dla innych jezykow np Rust: rustc, Java: javac etc
 
-kompilator
-...
-
-konsolidator
-...
-
-Jak uzywac GNU najpopularniejszego kompilatora dla c/c++ ?
+**Proces kompilacji**
+1. Pereprocesor
 
 ...
 
-makefile
-make
+2. kompilator
+
+...
+
+3. konsolidator
+
+...
+
+**Jak uzywac GNU najpopularniejszego kompilatora dla c/c++ ?**
+
+...
+
+
+
+### makefile
+
+### make 
