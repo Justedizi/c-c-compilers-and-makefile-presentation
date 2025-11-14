@@ -1,2 +1,9 @@
-# c-c-compilers-and-makefile-presentation
-this will cover all basic knowlage about compilers and makefile in c/cpp
+# kompilatory i makefile w c/c++
+
+
+### kompilatory 
+
+
+#### makefile
+
+### make 
