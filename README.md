@@ -15,7 +15,7 @@
 
 **Proces kompilacji**
 
-***1. Preprocessing (Krok przedkompilacyjny)**
+***1. Preprocessing (Krok przedkompilacyjny)***
 Co się dzieje: Przetworzenie dyrektyw preprocesora
 
 Działania:
@@ -41,7 +41,7 @@ Generacja kodu asemblera dla danego procesora
 
 Rezultat: Plik w assemblerze (.s lub .asm)
 
-***3. Asemblacja (Assembly)****
+***3. Asemblacja (Assembly)***
 Co się dzieje: Tłumaczenie kodu asemblera na kod maszynowy
 
 Działania:
