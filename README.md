@@ -116,13 +116,13 @@ Mozemy tez okreslic lokalna sciezke do biblioteki uwzwajac **-L** np:
 g++ main.cpp -o app -L/usr/local/lib -lmyframework
 ```
 
-### Co zrobić gdy nasz projekt ma dużo plików i korzysta z wielu bibliotek?
+## Co zrobić gdy nasz projekt ma dużo plików i korzysta z wielu bibliotek?
 
 Kompilowanie takiego projektu ręcznie jest żmudne i nanoszenie nawet małych zmian zmusza nas do wpisawania wielu linijek komend.
 
 Istnieją jednak narzędzia do automatycznej kompilacji, które usprawniają ten proces. W tej prezentacji omówimy na przykładzie jedno z nich - ***make***.
 
-Należy jednak pamiętać że istnieją inne alternatywy. Niektóre tworzone z myślą o konkretnm języku programowania. Dla przykładu:
+Należy pamiętać że istnieją inne alternatywy. Niektóre tworzone z myślą o konkretnym języku programowania. Dla przykładu:
 * Cmake ( C/C++ )
 * Apache Maven, Gradle, Ant (Java)
 
@@ -138,29 +138,100 @@ apt list --installed | grep make/
 ```bash
 sudo apt install make
 ```
-### Podstawy make
-Najprostszy sposób na uruchomienie make to wpisanie:
+## Podstawy make
+Make uruchamiamy wpisując:
 
-```bash
+```make
 make
 ```
-... i to wszystko. Make wykona wtedy pierwszą regułę w pliku tekstowego o nazwie ***Makefile***.
+... i to wszystko. Make wykona wtedy pierwszą regułę w pliku o nazwie ***Makefile*** albo ***makefile***.
 
-Możemy poprosić make o wykonanie reguł z innego pliku lub z innego katalogu, 
+Make może wykonać reguły z innego pliku lub z innego katalogu:
 ```bash
-make -C new/directory -f weirdfilename.txt
+make -f make-weirdname/DoNotNameFiles.likeThis
 ```
 Możemy również zrobić próbne wykonanie *na sucho* z flagami **-n** lub **--dry-run**.
-Wtedy make tylko wypisze wszystkie komendy do konsoli bez ich wykonywania.
+Wtedy wszystkie komendy zostaną wypisane do konsoli bez ich wykonywania.
+
+#### ***W Make polecenia w regułach muszą zaczynać się od tabulatora. Użycie spacji zamiast tabulatora spowoduje błąd!***
 
 ### Budowa reguły
 Make wykonuje reguły, które mają taką budowę:
-```makefile
+```Makefile
 CEL: ZALEŻNOŚCI
-	POLECENIA (wykonywane w powłoce systemowej)
+	POLECENIA 
 ```
-#### CEL (TARGET) to pliki które chcemy utworzyć lub zadanie ktore chcemy utworzyć.
-#### ZALEŻNOŚĆI (DEPENDENCIES)- pliki lub inne zadania.
-#### POLECENIA - komendy, które mają utworzyć target.
+#### CEL (TARGET) to pliki które chcemy utworzyć lub zadanie, ktore chcemy utworzyć.
+#### ZALEŻNOŚCI (DEPENDENCIES)- pliki lub inne zadania.
+#### POLECENIA - wykonywane są w powłoce systemowej
+
+ Make wykona regułe tylko wtedy, gdy któryś element drzewa zależności został zmieniony później niż data modyfikacji CELU.
+
+Konkretną regułę możemy włączyć dając ją jako argument Make.
+
+### Uwaga! Poleceń Make nie można traktować tak jak Basha!
+**\$\( \)** - jest symbolem odczytu zmiennej / uruchomienia funkcji wbudowanej w Make.
+Aby uruchomić podprogram w shellu należy użyć "$$( )".
+```Makefile
+rule:
+    @echo $$(cat a.txt)
+```
+Każda linia reguły wykonywana jest w osobnym shellu.
+W poniższnym przykładzie pwd nie zadziała w sposób oczekiwany:
+```Makefile
+rule:
+    cd source
+    pwd
+```
+### .PHONY i .SILENT
+W Make możemy określić dyrektywami cel naszej reguły:
+* .PHONY - informujemy że reguła nie jest powiązana z żadnym plikiem/folderem.
+* .SILENT - wyłączamy domyślne wypisywanie każdej wykonanej linii skryptu przez Make.
+```Makefile
+.PHONY: rule0 rule1 rule2
+.SILENT: rule1 rule2
+```
+
+## Zmienne i wzorce w Make
+#### Mamy kilka typów zmiennych w Make:
+* **:=** przypisanie od razu, natychmiast
+* **=** leniwe przypisanie - przy każdym użyciu wartość zmiennej jest ponownie obliczana
+* **?=** warunkowe przypisanie - następuje wtw gdy zmienna nie ma wartości
+* **+=** Zwykłe dopisanie do istniejącej zmiennej
+
+#### Nie można nie wspomnieć tutaj o zmiennych automatycznych:
+* **$@** - target
+* **$<** - pierwsza zależność ( liczy się do spacji !)
+* **$+** - wszystkie zależności (z duplikatami)
+* **$^** - wszystkie zależności (bez duplikatów)
+* **$\*** - część nazwy dopasowana przez % w regule wzorcowej.
+
+Wywołując make możemy ustawić początkową wartość zmiennej:
+```Makefile
+GCC ?= g++
+main: main.cpp
+    $(GCC) main.cpp -o main
+```
+```bash
+make GCC="clang"
+```
+
+#### Dopasowanie wzorów
+Możemy za pomocą symbolu **%** dopasować prerekwizyt do targetu i vice versa.
+```Makefile
+%.o: %.cpp
+    g++ -c $< -o $@
+```
+W przykładzie: dla każdego pliku .o, od którego będzie zależał inny plik w regule, zastosowanie ma ta reguła.
+
+## Podsumowanie
+
+### Kompilację w C/CPP możemy podzielić na:
+#### 1. Preprocessing
+#### 2. Kompilację ( do kodu assemblerowego )
+#### 3. Asemblację ( do plików obiektowych )
+#### 4. Linkowanie ( plików obiektowych z bibliotekami )
+
+### Make automatyzuje proces kompilacji, linkowania i uruchamiania programów w C/C++. Ułatwia i usprawnia tworzenie bibliotek, zarządzanie zależnościami oraz wykonywanie własnych skryptów. 
 
 

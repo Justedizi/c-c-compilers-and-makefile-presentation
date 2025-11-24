@@ -3,3 +3,8 @@
 
 # C/C++ object files
 *.o
+
+build/
+
+.vscode
+
