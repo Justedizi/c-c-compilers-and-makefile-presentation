@@ -70,7 +70,7 @@ Rezultat: Gotowy program (.exe na Windows, bez rozszerzenia na Linux)
  
  kompilacja i uruchomienie pierwszego programu 
 ```bash
-gcc main.c | ./a.out
+gcc main.c && ./a.out
 
 ```
 mozemy rowniez okreslic nazwe jaka pliku w ze skompilowanym kodem domyslnie plik nazywa sie **a.out**
